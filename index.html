@@ -531,6 +531,36 @@ nav.visible { transform: translateY(0); transition: transform 0.5s var(--ease-sm
 .placeholder-img { background: var(--dark); display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; position: relative; overflow: hidden; }
 .placeholder-img::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--dark) 0%, var(--dark-mid) 50%, var(--dark) 100%); }
 .placeholder-img::after { content: attr(data-label); position: relative; font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); }
+
+/* ═══ ANIMATED NAME ═══ */
+.animated-name-section { padding: 80px 48px; text-align: center; position: relative; overflow: hidden; }
+.animated-name { font-family: var(--font-display); font-weight: 800; font-size: clamp(3rem, 8vw, 6rem); letter-spacing: 0.02em; display: inline-block; position: relative; cursor: default; }
+.animated-name .name-char { display: inline-block; transition: all 0.3s var(--ease-smooth); position: relative; }
+.animated-name:hover .name-char { animation: nameCharBounce 0.6s var(--ease-out); }
+.animated-name .name-char:nth-child(1) { animation-delay: 0s; }
+.animated-name .name-char:nth-child(2) { animation-delay: 0.05s; }
+.animated-name .name-char:nth-child(3) { animation-delay: 0.1s; }
+.animated-name .name-char:nth-child(4) { animation-delay: 0.15s; }
+.animated-name .name-char:nth-child(5) { animation-delay: 0.2s; }
+.animated-name .name-char:nth-child(6) { animation-delay: 0.25s; }
+.animated-name .name-char:nth-child(7) { animation-delay: 0.3s; }
+.animated-name .name-char:nth-child(8) { animation-delay: 0.35s; }
+.animated-name .name-char:nth-child(9) { animation-delay: 0.4s; }
+.animated-name .name-char:nth-child(10) { animation-delay: 0.45s; }
+.animated-name .name-char:nth-child(11) { animation-delay: 0.5s; }
+.animated-name .name-char:nth-child(12) { animation-delay: 0.55s; }
+.animated-name .name-char:nth-child(13) { animation-delay: 0.6s; }
+@keyframes nameCharBounce {
+  0% { transform: translateY(0) scale(1); color: var(--white); }
+  25% { transform: translateY(-20px) scale(1.1) rotateZ(-5deg); color: var(--accent); }
+  50% { transform: translateY(-10px) scale(1.05); color: var(--accent); }
+  75% { transform: translateY(-5px) scale(1.02); color: var(--white); }
+  100% { transform: translateY(0) scale(1); color: var(--white); }
+}
+.animated-name .name-char:hover { color: var(--accent); transform: scale(1.15) translateY(-8px); text-shadow: 0 0 20px var(--accent-mid); }
+.animated-name .name-space { display: inline-block; width: 0.3em; }
+.name-subtitle { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--grey); margin-top: 24px; opacity: 0; transition: opacity 0.6s var(--ease-smooth) 0.3s; }
+.animated-name-section:hover .name-subtitle { opacity: 1; }
 </style>
 </head>
 <body class="loading">
@@ -696,8 +726,14 @@ nav.visible { transform: translateY(0); transition: transform 0.5s var(--ease-sm
 <!-- ABOUT -->
 <div class="page" id="page-about">
   <section class="about-hero"><div class="about-overline reveal delay-1">About &mdash; The Person Behind the Work</div><h2 class="about-headline reveal delay-2 scroll-parallax" data-speed="0.03">Curious, hands-on, and obsessed with building things that actually <span class="accent">make sense</span>.</h2></section>
+  
+  <section class="animated-name-section reveal delay-3">
+    <div class="animated-name" id="animatedName"></div>
+    <div class="name-subtitle">Product Designer · Visual Designer</div>
+  </section>
+
   <section class="about-story">
-    <div class="about-story-visual reveal-left"><div class="placeholder-img" data-label="Portrait" style="position:absolute;inset:0;"></div></div>
+    <div class="about-story-visual reveal-left"><img src="yuvraj-portrait.jpg" alt="Yuvraj Singh" style="width:100%;height:100%;object-fit:cover;border-radius:4px;"/></div>
     <div class="about-story-text">
       <h3 class="reveal delay-1">The Short Version</h3>
       <p class="reveal delay-2">I design digital products, brand experiences, and interactive systems that bridge the gap between ideas and execution. From core app interfaces to growth surfaces like social, PR, and experiments, I focus on clarity, usability, and impact over decoration.</p>
@@ -968,6 +1004,7 @@ function navigateTo(pn,pid=null){
     else{document.getElementById('page-'+pn).classList.add('active');}
     currentPage=pn;window.scrollTo(0,0);smoothY=0;targetY=0;
     if(pn==='contact')splitContactHeadline();
+    if(pn==='about')initAnimatedName();
     // Leave transition (panels slide up)
     setTimeout(()=>{
       transition.classList.remove('entering');transition.classList.add('leaving');
@@ -1117,6 +1154,26 @@ function initDecisionAxes(){
       });
     },{threshold:0.4});
     obs.observe(axis);
+  });
+}
+
+/* ═══ ANIMATED NAME ═══ */
+function initAnimatedName(){
+  const nameEl=document.getElementById('animatedName');
+  if(!nameEl||nameEl.dataset.initialized)return;
+  nameEl.dataset.initialized='true';
+  const nameText='YUVRAJ SINGH';
+  nameEl.innerHTML='';
+  nameText.split('').forEach((char,i)=>{
+    const span=document.createElement('span');
+    if(char===' '){
+      span.className='name-space';
+      span.innerHTML='&nbsp;';
+    } else {
+      span.className='name-char';
+      span.textContent=char;
+    }
+    nameEl.appendChild(span);
   });
 }
 
