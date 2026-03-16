@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Gallery — UI/UX Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #050505;
+  --charcoal: #0a0a0a;
+  --dark: #111111;
+  --dark-mid: #1a1a1a;
+  --mid: #2a2a2a;
+  --grey: #555;
+  --light-grey: #888;
+  --off-white: #c8c8c8;
+  --white: #f0f0f0;
+  --accent: #00e5ff;
+  --accent-dim: #00e5ff22;
+  --accent-mid: #00e5ff55;
+  --accent-glow: #00e5ff15;
+  --accent-warm: #ff3c5f;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --glow-soft: 0 0 40px rgba(0, 229, 255, 0.1);
+  --shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --shadow-strong: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+body.light-mode {
+  --black: #ffffff;
+  --charcoal: #fafafa;
+  --dark: #f5f5f5;
+  --dark-mid: #e5e5e5;
+  --mid: #d4d4d4;
+  --grey: #737373;
+  --light-grey: #525252;
+  --off-white: #262626;
+  --white: #0a0a0a;
+  --accent: #0066cc;
+  --accent-dim: #0066cc22;
+  --accent-mid: #0066cc55;
+  --accent-glow: #0066cc15;
+  --accent-warm: #dc2626;
+}
+
+body.light-mode { background: transparent; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { 
+  background-color: #050505;
+  background-image: 
+    radial-gradient(circle, #1a1a1a 1px, transparent 1px),
+    linear-gradient(#1a1a1a 1px, transparent 1px),
+    linear-gradient(90deg, #1a1a1a 1px, transparent 1px);
+  background-size: 20px 20px, 50px 50px, 50px 50px;
+  background-position: 0 0, 0 0, 0 0;
+}
+body { 
+  font-family: var(--font-body); 
+  background: transparent; 
+  color: var(--white); 
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Vignette */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: 
+    radial-gradient(ellipse at top left, rgba(0, 229, 255, 0.03) 0%, transparent 40%),
+    radial-gradient(ellipse at bottom right, rgba(255, 60, 95, 0.02) 0%, transparent 40%),
+    radial-gradient(ellipse at center, transparent 0%, rgba(5, 5, 5, 0.4) 100%);
+  transition: background 0.4s ease;
+}
+
+body.light-mode::before {
+  background: 
+    radial-gradient(ellipse at top, rgba(0, 102, 204, 0.02) 0%, transparent 40%),
+    radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.02) 100%) !important;
+}
+
+/* Navigation */
+nav { 
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  z-index: 1000; 
+  padding: 28px 48px; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+}
+
+.nav-logo { 
+  font-family: var(--font-display); 
+  font-weight: 700; 
+  font-size: 1.1rem; 
+  color: var(--white); 
+  text-decoration: none; 
+  letter-spacing: -0.02em;
+}
+
+.nav-links { display: flex; gap: 40px; }
+.nav-links a { 
+  font-family: var(--font-mono); 
+  font-size: 0.7rem; 
+  color: var(--light-grey); 
+  text-decoration: none; 
+  letter-spacing: 0.1em; 
+  text-transform: uppercase; 
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--accent); }
+
+/* Theme Toggle */
+#themeToggle {
+  position: fixed;
+  top: 28px;
+  right: 48px;
+  z-index: 1002;
+  background: var(--dark);
+  border: 1px solid var(--dark-mid);
+  border-radius: 50px;
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-smooth);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--off-white);
+}
+
+#themeToggle:hover {
+  background: var(--dark-mid);
+  border-color: var(--accent-mid);
+  transform: translateY(-2px);
+}
+
+.theme-toggle-icon { width: 14px; height: 14px; }
+
+/* Main Container */
+.container { max-width: 1400px; margin: 0 auto; padding: 0 48px; }
+
+/* Page Header */
+.page-header {
+  padding: 180px 48px 120px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  line-height: 1.1;
+  color: var(--white);
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+}
+
+.page-subtitle {
+  font-size: 1.1rem;
+  color: var(--light-grey);
+  font-weight: 300;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Design Grid */
+.design-gallery-section {
+  padding: 0 48px 180px;
+  position: relative;
+  z-index: 1;
+}
+
+.design-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.design-item { 
+  position: relative; 
+  overflow: hidden; 
+  border-radius: 12px; 
+  background: var(--dark); 
+  cursor: zoom-in;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  transition: all 0.5s var(--ease-smooth);
+  aspect-ratio: 4/3; /* Default consistent aspect ratio */
+}
+
+.design-item:hover { 
+  transform: translateY(-12px); 
+  border-color: rgba(0, 229, 255, 0.3);
+  box-shadow: 
+    0 16px 48px rgba(0, 0, 0, 0.4),
+    0 0 60px rgba(0, 229, 255, 0.15),
+    inset 0 0 0 1px rgba(0, 229, 255, 0.2);
+}
+
+.design-item.large { 
+  grid-column: span 2; 
+  aspect-ratio: 16/9; /* Wider for large items */
+}
+
+.design-item.tall { 
+  aspect-ratio: 3/4; /* Taller for portrait items */
+}
+
+.design-item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure proper image fitting */
+  object-position: center; /* Center the image */
+  display: block;
+  transition: transform 0.7s var(--ease-smooth);
+}
+
+.design-item:hover .design-item-image {
+  transform: scale(1.05);
+}
+
+.design-item-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 32px 24px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 60%, transparent 100%);
+  transform: translateY(100%);
+  transition: transform 0.5s var(--ease-smooth);
+}
+
+.design-item:hover .design-item-overlay {
+  transform: translateY(0);
+}
+
+.design-item-category {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.design-item-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--white);
+  line-height: 1.3;
+}
+
+/* Lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  backdrop-filter: blur(20px);
+}
+
+.lightbox.active { display: flex; }
+
+.lightbox-close {
+  position: absolute;
+  top: 32px;
+  right: 48px;
+  font-size: 3rem;
+  color: var(--white);
+  cursor: pointer;
+  transition: transform 0.3s, color 0.3s;
+  z-index: 10000;
+  line-height: 1;
+  padding: 8px 16px;
+}
+
+.lightbox-close:hover {
+  transform: rotate(90deg);
+  color: var(--accent);
+}
+
+.lightbox-image {
+  max-width: 90%;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-caption {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  padding: 16px 32px;
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+}
+
+.lightbox-caption-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--white);
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.lightbox-caption-category {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Light Mode Styles */
+body.light-mode nav {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+body.light-mode .design-item {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+body.light-mode .design-item:hover {
+  border-color: rgba(0, 102, 204, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 102, 204, 0.12);
+}
+
+/* Mobile Responsive */
+@media (max-width: 900px) {
+  nav { padding: 24px; }
+  #themeToggle { right: 24px; }
+  .container, .design-gallery-section, .page-header { padding-left: 24px; padding-right: 24px; }
+  .design-grid { grid-template-columns: 1fr; gap: 24px; }
+  .design-item.large, .design-item.tall { grid-column: auto; grid-row: auto; }
+  .page-header { padding-top: 140px; padding-bottom: 80px; }
+  .lightbox { padding: 24px; }
+  .lightbox-close { top: 16px; right: 24px; }
+}
+
+@media (max-width: 480px) {
+  #themeToggle { right: 20px; }
+  .theme-toggle-text { display: none; }
+  .nav-links { gap: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <a href="portfolio-updated.html" class="nav-logo">DesignDecode</a>
+  <div class="nav-links">
+    <a href="portfolio-updated.html">Home</a>
+    <a href="portfolio-updated.html#projects">Projects</a>
+    <a href="design-gallery.html" style="color: var(--accent);">Design</a>
+  </div>
+</nav>
+
+<!-- Theme Toggle -->
+<div id="themeToggle">
+  <div class="theme-toggle-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </div>
+  <span class="theme-toggle-text">Light</span>
+</div>
+
+<!-- Page Header -->
+<div class="page-header">
+  <h1 class="page-title">UI/UX Design Gallery</h1>
+  <p class="page-subtitle">A collection of visual identities, interface designs, and creative explorations across digital and print media.</p>
+</div>
+
+<!-- Design Gallery -->
+<section class="design-gallery-section">
+  <div class="design-grid">
+    <!-- 1. Bismil Event Poster -->
+    <div class="design-item large" data-title="Bismil ki Mehfil" data-category="Event Poster">
+      <img class="design-item-image" src="design-bismil.png" alt="Band Baaja Odyssey Event Poster">
+      <div class="design-item-overlay">
+        <div class="design-item-category">Event Poster</div>
+        <div class="design-item-title">Bismil ki Mehfil</div>
+      </div>
+    </div>
+
+    <!-- 2. Sereine Logo -->
+    <div class="design-item" data-title="Sereine" data-category="Brand Identity">
+      <img class="design-item-image" src="design-sereine.png" alt="Sereine Brand Logo">
+      <div class="design-item-overlay">
+        <div class="design-item-category">Brand Identity</div>
+        <div class="design-item-title">Sereine</div>
+      </div>
+    </div>
+
+    <!-- 3. Coming Soon -->
+    <div class="design-item tall" data-title="Band Baaja Coming Soon" data-category="Social Media">
+      <img class="design-item-image" src="design-coming-soon.png" alt="Band Baaja Coming Soon">
+      <div class="design-item-overlay">
+        <div class="design-item-category">Social Media</div>
+        <div class="design-item-title">Band Baaja Coming Soon</div>
+      </div>
+    </div>
+
+    <!-- 4. Odyssey Sponsorship -->
+    <div class="design-item" data-title="Odyssey Sponsorship" data-category="Proposal Design">
+      <img class="design-item-image" src="design-odyssey.png" alt="Odyssey Cultural Fest">
+      <div class="design-item-overlay">
+        <div class="design-item-category">Proposal Design</div>
+        <div class="design-item-title">Odyssey Sponsorship</div>
+      </div>
+    </div>
+
+    <!-- 5. Jivan Amrit Logo -->
+    <div class="design-item" data-title="Jivan Amrit Organics" data-category="Brand Identity">
+      <img class="design-item-image" src="design-jivan-amrit.png" alt="Jivan Amrit Organics">
+      <div class="design-item-overlay">
+        <div class="design-item-category">Brand Identity</div>
+        <div class="design-item-title">Jivan Amrit Organics</div>
+      </div>
+    </div>
+
+    <!-- 6. Product Packaging -->
+    <div class="design-item large" data-title="Organic Product Packaging" data-category="Packaging Design">
+      <img class="design-item-image" src="design-packaging.png" alt="Product Packaging">
+      <div class="design-item-overlay">
+        <div class="design-item-category">Packaging Design</div>
+        <div class="design-item-title">Organic Product Packaging</div>
+      </div>
+    </div>
+
+    <!-- 7. E-Cell Pitchers -->
+    <div class="design-item" data-title="E-Cell Pitchers 2" data-category="Event Branding">
+      <img class="design-item-image" src="design-ecell-pitchers.png" alt="E-Cell Pitchers">
+      <div class="design-item-overlay">
+        <div class="design-item-category">Event Branding</div>
+        <div class="design-item-title">E-Cell Pitchers 2</div>
+      </div>
+    </div>
+
+    <!-- 8. Induction -->
+    <div class="design-item" data-title="Induction '25" data-category="Event Poster">
+      <img class="design-item-image" src="design-induction.png" alt="Induction Poster">
+      <div class="design-item-overlay">
+        <div class="design-item-category">Event Poster</div>
+        <div class="design-item-title">Induction '25</div>
+      </div>
+    </div>
+
+    <!-- 9. RegisterKaro -->
+    <div class="design-item" data-title="RegisterKaro Campaign" data-category="Social Media Ad">
+      <img class="design-item-image" src="design-registerkaro.png" alt="RegisterKaro Ad">
+      <div class="design-item-overlay">
+        <div class="design-item-category">Social Media Ad</div>
+        <div class="design-item-title">RegisterKaro Campaign</div>
+      </div>
+    </div>
+
+    <!-- 10. India HCI Banner -->
+    <div class="design-item large" data-title="India HCI 2025" data-category="Event Banner">
+      <img class="design-item-image" src="design-india-hci.png" alt="India HCI Banner">
+      <div class="design-item-overlay">
+        <div class="design-item-category">Event Banner</div>
+        <div class="design-item-title">India HCI 2025</div>
+      </div>
+    </div>
+
+    <!-- 11. Father's Day -->
+    <div class="design-item" data-title="Father's Day" data-category="Social Media">
+      <img class="design-item-image" src="design-fathers-day.png" alt="Father's Day Design">
+      <div class="design-item-overlay">
+        <div class="design-item-category">Social Media</div>
+        <div class="design-item-title">Father's Day</div>
+      </div>
+    </div>
+
+    <!-- 12. Election Day -->
+    <div class="design-item" data-title="Student Council Election" data-category="Campaign Poster">
+      <img class="design-item-image" src="design-election-day.png" alt="Election Day Poster">
+      <div class="design-item-overlay">
+        <div class="design-item-category">Campaign Poster</div>
+        <div class="design-item-title">Student Council Election</div>
+      </div>
+    </div>
+
+    <!-- 13. Food Services -->
+    <div class="design-item tall" data-title="Food Services Escalation" data-category="Infographic">
+      <img class="design-item-image" src="design-food-services.png" alt="Food Services Infographic">
+      <div class="design-item-overlay">
+        <div class="design-item-category">Infographic</div>
+        <div class="design-item-title">Food Services Escalation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-close" id="lightboxClose">&times;</div>
+  <img class="lightbox-image" id="lightboxImage" src="" alt="">
+  <div class="lightbox-caption">
+    <div class="lightbox-caption-title" id="lightboxTitle"></div>
+    <div class="lightbox-caption-category" id="lightboxCategory"></div>
+  </div>
+</div>
+
+<script>
+// Theme Toggle
+const themeToggle = document.getElementById('themeToggle');
+const themeToggleText = document.querySelector('.theme-toggle-text');
+
+function updateTheme(isLight) {
+  const htmlEl = document.documentElement;
+  const bodyEl = document.body;
+  
+  if (isLight) {
+    bodyEl.classList.add('light-mode');
+    htmlEl.style.backgroundColor = '#fafafa';
+    htmlEl.style.backgroundImage = `
+      radial-gradient(ellipse at top left, rgba(0, 102, 204, 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(0, 102, 204, 0.02) 0%, transparent 50%),
+      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px)
+    `.replace(/\s+/g, ' ').trim();
+    htmlEl.style.backgroundSize = '100% 100%, 100% 100%, 60px 60px, 60px 60px';
+    htmlEl.style.backgroundPosition = '0 0, 0 0, 0 0, 0 0';
+    htmlEl.style.scrollbarColor = '#d4d4d4 #fafafa';
+    themeToggleText.textContent = 'Dark';
+  } else {
+    bodyEl.classList.remove('light-mode');
+    htmlEl.style.backgroundColor = '#050505';
+    htmlEl.style.backgroundImage = 'radial-gradient(circle, #1a1a1a 1px, transparent 1px), linear-gradient(#1a1a1a 1px, transparent 1px), linear-gradient(90deg, #1a1a1a 1px, transparent 1px)';
+    htmlEl.style.backgroundSize = '20px 20px, 50px 50px, 50px 50px';
+    htmlEl.style.backgroundPosition = '0 0, 0 0, 0 0';
+    htmlEl.style.scrollbarColor = '#2a2a2a #050505';
+    themeToggleText.textContent = 'Light';
+  }
+}
+
+const currentTheme = localStorage.getItem('theme') || 'dark';
+updateTheme(currentTheme === 'light');
+
+themeToggle.addEventListener('click', () => {
+  const isLight = !document.body.classList.contains('light-mode');
+  updateTheme(isLight);
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+});
+
+// Lightbox
+const lightbox = document.getElementById('lightbox');
+const lightboxImage = document.getElementById('lightboxImage');
+const lightboxTitle = document.getElementById('lightboxTitle');
+const lightboxCategory = document.getElementById('lightboxCategory');
+const lightboxClose = document.getElementById('lightboxClose');
+
+document.querySelectorAll('.design-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const img = item.querySelector('.design-item-image');
+    const title = item.dataset.title;
+    const category = item.dataset.category;
+    
+    lightboxImage.src = img.src;
+    lightboxTitle.textContent = title;
+    lightboxCategory.textContent = category;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+lightboxClose.addEventListener('click', () => {
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+});
+
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+});
+</script>
+
+</body>
+</html>
