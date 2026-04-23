@@ -652,6 +652,41 @@ nav.visible { transform: translateY(0); transition: transform 0.5s var(--ease-sm
 .nav-links a.active { color: var(--accent); }
 .nav-links a.active::after { width: 100%; }
 
+/* PDF Download Button */
+.pdf-download-btn {
+  background: var(--accent) !important;
+  color: var(--black) !important;
+  padding: 8px 20px !important;
+  border-radius: 50px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s var(--ease-smooth) !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.pdf-download-btn::after {
+  display: none !important; /* Remove underline effect */
+}
+
+.pdf-download-btn:hover {
+  background: var(--white) !important;
+  color: var(--black) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px var(--accent-glow) !important;
+}
+
+body.light-mode .pdf-download-btn {
+  background: var(--accent) !important;
+  color: #ffffff !important;
+}
+
+body.light-mode .pdf-download-btn:hover {
+  background: var(--off-white) !important;
+  color: #ffffff !important;
+}
+
 /* ═══ SCROLL REVEALS ═══ */
 .reveal { opacity: 0; transform: translateY(80px); transition: opacity 1s var(--ease-smooth), transform 1.2s var(--ease-smooth); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -1354,6 +1389,17 @@ nav.visible { transform: translateY(0); transition: transform 0.5s var(--ease-sm
   .nav-links a { font-size: 0.55rem; letter-spacing: 0.1em; }
   .nav-logo { font-size: 0.85rem; }
   
+  /* PDF button - icon only on mobile */
+  .pdf-download-btn {
+    padding: 8px 12px !important;
+    font-size: 0 !important; /* Hide text */
+  }
+  
+  .pdf-download-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  
   .featured-work { padding: 60px 20px 80px; }
   .featured-card-overlay { padding: 20px; }
   .featured-card-title { font-size: 1.1rem; }
@@ -1561,6 +1607,16 @@ nav.visible { transform: translateY(0); transition: transform 0.5s var(--ease-sm
     <li><a href="#" data-page="projects">Work</a></li>
     <li><a href="#" data-page="about">About</a></li>
     <li><a href="#" data-page="contact">Contact</a></li>
+    <li>
+      <a href="Yuvraj-Singh-Portfolio.pdf" download class="pdf-download-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        Portfolio
+      </a>
+    </li>
   </ul>
 </nav>
 
